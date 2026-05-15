@@ -1,0 +1,113 @@
+/* ============================================
+   LAYOUT.CSS - Sidebar, Topbar & Navigation
+   Dashboard layout structure
+   ============================================ */
+
+/* ---- Sidebar ---- */
+.vs-sidebar {
+    background-color: var(--vs-surface-color);
+    border-right: 1px solid var(--vs-border-color);
+    min-height: 100vh;
+    width: 260px;
+    min-width: 260px;
+    transition: all 0.3s ease;
+}
+
+@media (max-width: 991.98px) {
+    .vs-sidebar {
+        position: fixed;
+        left: -260px;
+        top: 0;
+        bottom: 0;
+        z-index: 1050;
+    }
+    .vs-sidebar.show {
+        left: 0;
+    }
+    .vs-sidebar-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.4);
+        z-index: 1040;
+        backdrop-filter: blur(2px);
+    }
+    .vs-sidebar-overlay.show {
+        display: block;
+    }
+}
+.vs-sidebar-dark {
+    background-color: var(--vs-primary);
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* ---- Sidebar Navigation Links ---- */
+.vs-nav-link {
+    color: var(--vs-text-body);
+    font-weight: 500;
+    padding: 0.75rem 1rem;
+    border-radius: var(--vs-radius-md);
+    margin-bottom: 0.25rem;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+.vs-nav-link:hover {
+    background-color: rgba(0,0,0,0.03);
+    color: var(--vs-text-header);
+}
+.vs-nav-link.active {
+    background-color: rgba(0, 35, 111, 0.05);
+    color: var(--vs-primary);
+    border-left: 4px solid var(--vs-primary);
+    border-radius: 0 var(--vs-radius-md) var(--vs-radius-md) 0;
+}
+
+/* ---- Sidebar Dark Variant ---- */
+.vs-sidebar-dark .vs-nav-link {
+    color: rgba(255,255,255,0.7);
+}
+.vs-sidebar-dark .vs-nav-link:hover {
+    background-color: rgba(255,255,255,0.1);
+    color: #fff;
+}
+.vs-sidebar-dark .vs-nav-link.active {
+    background-color: rgba(255,255,255,0.15);
+    color: #fff;
+    border-left: 4px solid #fff;
+}
+
+/* ---- Topbar ---- */
+.vs-topbar {
+    background-color: var(--vs-surface-color);
+    border-bottom: 1px solid var(--vs-border-color);
+    padding: 1rem 1.5rem;
+}
+
+/* ---- Brand Logo ---- */
+.vs-brand-logo {
+    height: auto;
+    max-height: 56px;
+    width: auto;
+    max-width: 100%;
+    transition: transform 0.3s ease;
+}
+.vs-brand-logo:hover {
+    transform: translateY(-2px) scale(1.02);
+}
+.vs-brand-logo-sm {
+    height: auto;
+    max-height: 40px;
+    width: auto;
+    max-width: 100%;
+}
+.vs-brand-logo-lg {
+    height: auto;
+    max-height: 140px;
+    width: auto;
+    max-width: 100%;
+}

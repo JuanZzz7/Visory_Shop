@@ -1,0 +1,149 @@
+/* ============================================
+   COMPONENTS.CSS - Reusable UI Components
+   Cards, Buttons, Forms, Tables, Badges, Alerts
+   ============================================ */
+
+/* ---- Cards ---- */
+.vs-card {
+    background-color: var(--vs-surface-color);
+    border: 1px solid var(--vs-border-color);
+    border-radius: var(--vs-radius-lg);
+    box-shadow: var(--vs-shadow-1);
+    transition: all 0.2s ease-in-out;
+}
+.vs-card:hover {
+    box-shadow: var(--vs-shadow-2);
+    border-color: var(--vs-secondary);
+}
+.vs-card .card-footer {
+    border-bottom-left-radius: var(--vs-radius-lg);
+    border-bottom-right-radius: var(--vs-radius-lg);
+}
+
+/* ---- Buttons ---- */
+.btn-primary {
+    background-color: var(--vs-primary);
+    border-color: var(--vs-primary);
+    color: #fff;
+    font-weight: 500;
+    padding: 0.5rem 1.25rem;
+    border-radius: var(--vs-radius-md);
+    box-shadow: var(--vs-shadow-1);
+    transition: background-color 0.2s;
+}
+.btn-primary:hover, .btn-primary:focus {
+    background-color: var(--vs-primary-hover);
+    border-color: var(--vs-primary-hover);
+    color: #fff;
+}
+
+.btn-secondary {
+    background-color: var(--vs-secondary);
+    border-color: var(--vs-secondary);
+    color: #fff;
+    font-weight: 500;
+}
+.btn-secondary:hover, .btn-secondary:focus {
+    background-color: var(--vs-secondary-hover);
+    border-color: var(--vs-secondary-hover);
+}
+
+.btn-outline-primary {
+    color: var(--vs-primary);
+    border-color: var(--vs-primary);
+    font-weight: 500;
+}
+.btn-outline-primary:hover {
+    background-color: var(--vs-primary);
+    color: #fff;
+}
+
+.btn-check:checked + .btn-outline-primary {
+    background-color: var(--vs-primary);
+    border-color: var(--vs-primary);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(0, 35, 111, 0.3);
+}
+
+/* ---- Forms ---- */
+.form-control, .form-select {
+    border: 1px solid var(--vs-border-color);
+    border-radius: var(--vs-radius-md);
+    padding: 0.75rem 1rem;
+    font-size: 0.875rem;
+    color: var(--vs-text-body);
+}
+.form-control:focus, .form-select:focus {
+    border-color: var(--vs-primary);
+    box-shadow: 0 0 0 0.2rem rgba(0, 35, 111, 0.2);
+}
+.form-label {
+    font-weight: 500;
+    font-size: 0.875rem;
+    color: var(--vs-text-header);
+    margin-bottom: 0.5rem;
+}
+
+/* ---- Tables ---- */
+.table {
+    color: var(--vs-text-body);
+    font-size: 0.875rem;
+}
+.table thead th {
+    background-color: #F1F5F9;
+    color: var(--vs-text-header);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid var(--vs-border-color);
+    padding: 1rem;
+}
+.table tbody td {
+    padding: 1rem;
+    vertical-align: middle;
+    border-bottom: 1px solid var(--vs-border-color);
+}
+
+/* ---- Badges ---- */
+.badge-soft-success {
+    background-color: rgba(13, 148, 136, 0.1);
+    color: #0d9488;
+}
+.badge-soft-danger {
+    background-color: rgba(220, 38, 38, 0.1);
+    color: #dc2626;
+}
+.badge-soft-warning {
+    background-color: rgba(217, 119, 6, 0.1);
+    color: #d97706;
+}
+.badge-soft-primary {
+    background-color: rgba(0, 35, 111, 0.1);
+    color: var(--vs-primary);
+}
+
+/* ---- Alerts ---- */
+.alert {
+    border-radius: var(--vs-radius-md);
+    font-size: 0.875rem;
+}
+
+/* ---- Pagination ---- */
+.pagination .page-link {
+    color: var(--vs-primary);
+    border-color: var(--vs-border-color);
+    border-radius: var(--vs-radius-md);
+    margin: 0 2px;
+    font-weight: 500;
+    font-size: 0.875rem;
+}
+.pagination .page-item.active .page-link {
+    background-color: var(--vs-primary);
+    border-color: var(--vs-primary);
+    color: #fff;
+}
+.pagination .page-link:hover {
+    background-color: var(--vs-bg-color);
+    color: var(--vs-primary);
+}

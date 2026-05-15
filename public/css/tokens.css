@@ -1,0 +1,74 @@
+/* ============================================
+   TOKENS.CSS - Design Tokens & Variables
+   Spotlight — Aldea Digital Design System
+   ============================================ */
+
+:root {
+    /* Brand Colors */
+    --vs-primary: #00236f;
+    --vs-primary-hover: #1e3a8a;
+    --vs-secondary: #0d9488;
+    --vs-secondary-hover: #0f766e;
+
+    /* Surface & Background */
+    --vs-bg-color: #F8FAFC;
+    --vs-surface-color: #FFFFFF;
+    --vs-border-color: #E2E8F0;
+
+    /* Text */
+    --vs-text-header: #1a1b21;
+    --vs-text-body: #444651;
+    --vs-text-muted: #757682;
+
+    /* Shadows */
+    --vs-shadow-1: 0px 1px 3px rgba(0,0,0,0.05), 0px 1px 2px rgba(0,0,0,0.02);
+    --vs-shadow-2: 0px 10px 15px -3px rgba(0,0,0,0.08);
+    --vs-shadow-3: 0px 20px 25px -5px rgba(0,0,0,0.1);
+
+    /* Border Radius */
+    --vs-radius-sm: 0.25rem;
+    --vs-radius-md: 0.5rem;
+    --vs-radius-lg: 1rem;
+    --vs-radius-xl: 1.5rem;
+
+    /* Bootstrap Overrides */
+    --bs-primary: var(--vs-primary);
+    --bs-secondary: var(--vs-secondary);
+    --bs-body-bg: var(--vs-bg-color);
+    --bs-body-color: var(--vs-text-body);
+    --bs-font-sans-serif: 'Inter', sans-serif;
+    --bs-border-radius: var(--vs-radius-md);
+    --bs-border-radius-lg: var(--vs-radius-lg);
+    --bs-border-radius-sm: var(--vs-radius-sm);
+    --bs-border-color: var(--vs-border-color);
+}
+
+/* Base Resets */
+html { scroll-behavior: smooth; }
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--vs-bg-color);
+    color: var(--vs-text-body);
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+    color: var(--vs-text-header);
+    font-weight: 600;
+}
+
+h1, .h1 { letter-spacing: -0.02em; }
+h2, .h2 { letter-spacing: -0.01em; }
+h3, .h3 { letter-spacing: -0.01em; }
+
+/* Links */
+a {
+    color: var(--vs-primary);
+    text-decoration: none;
+}
+a:hover {
+    color: var(--vs-primary-hover);
+}

@@ -1,0 +1,23 @@
+/* ============================================
+   UTILITIES.CSS - Helper Classes
+   Text sizes, spacing, z-index, misc helpers
+   ============================================ */
+
+/* Text sizes */
+.text-xs { font-size: 0.75rem; }
+.text-sm { font-size: 0.875rem; }
+
+/* Font weights */
+.font-medium { font-weight: 500; }
+.font-semibold { font-weight: 600; }
+
+/* Letter spacing */
+.tracking-wide { letter-spacing: 0.05em; }
+
+/* Z-index */
+.z-1 { z-index: 1; }
+
+/* Hover effects */
+.hover-opacity-100:hover {
+    opacity: 1 !important;
+}
