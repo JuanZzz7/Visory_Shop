@@ -65,18 +65,6 @@ Accede en: http://localhost:8000
 
 ---
 
-## Cuentas de prueba
-
-| Rol           | Correo                     | Contraseña |
-|---------------|---------------------------|------------|
-| Administrador | admin@spotlight.com       | password   |
-| Empresario 1  | carlos@spotlight.com      | password   |
-| Empresario 2  | maria@spotlight.com       | password   |
-| Usuario 1     | ana@spotlight.com         | password   |
-| Usuario 2     | luis@spotlight.com        | password   |
-
----
-
 ## Estructura del proyecto
 
 ```
