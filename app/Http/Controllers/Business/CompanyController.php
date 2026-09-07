@@ -50,12 +50,12 @@ class CompanyController extends Controller
                 'description' => 'nullable|string',
                 'category'    => 'nullable|string|max:100',
                 'logo'        => 'nullable|image|mimes:jpeg,png,jpg,gif,webp,bmp|max:2048',
-                'banner'      => 'nullable|image|mimes:jpeg,png,jpg,gif,webp,bmp|max:15360',
+                'banner'      => 'nullable|image|mimes:jpeg,png,jpg,gif,webp,bmp|max:2048',
             ], [
                 'name.required'   => 'El nombre de la empresa es obligatorio.',
                 'banner.image'    => 'El banner debe ser una imagen.',
                 'banner.mimes'    => 'El banner debe ser JPG, PNG, GIF, WebP o BMP.',
-                'banner.max'      => 'El banner no puede superar los 15 MB.',
+                'banner.max'      => 'El banner no puede superar los 2 MB por límite del servidor.',
                 'logo.max'        => 'El logo no puede superar los 2 MB.',
             ]);
         } elseif ($section === 'legal') {

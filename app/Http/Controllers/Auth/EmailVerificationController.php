@@ -75,12 +75,12 @@ class EmailVerificationController extends Controller
         if (now()->timestamp > $pending['expires_at']) {
             session()->forget('google_pending');
             return redirect()->route('verify.notice')
-                ->withErrors(['code' => '⏱ El código expiró. Por favor reenvía el correo.']);
+                ->withErrors(['code' => 'El código de verificación ha expirado. Por favor solicite un nuevo reenvío.']);
         }
 
         // Verificar código
         if ($code !== $pending['code']) {
-            return back()->withErrors(['code' => '❌ Código incorrecto. Verifica tu correo e intenta de nuevo.']);
+            return back()->withErrors(['code' => 'Código de verificación incorrecto. Por favor verifique el correo e intente nuevamente.']);
         }
 
         // Código correcto → crear o actualizar usuario
@@ -110,7 +110,7 @@ class EmailVerificationController extends Controller
         // Limpiar sesión de verificación
         session()->forget('google_pending');
 
-        return redirect()->intended('/')->with('success', '✅ ¡Bienvenido! Tu cuenta ha sido verificada correctamente.');
+        return redirect()->intended('/')->with('success', 'Su cuenta ha sido verificada correctamente.');
     }
 
     /**
@@ -134,6 +134,6 @@ class EmailVerificationController extends Controller
         );
 
         return redirect()->route('verify.notice')
-            ->with('success', '📧 Se envió un nuevo código a ' . $pending['email']);
+            ->with('success', 'Se ha enviado un nuevo código de verificación a ' . $pending['email']);
     }
 }

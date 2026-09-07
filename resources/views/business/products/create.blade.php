@@ -2,13 +2,6 @@
 @section('title','Nuevo Producto')
 @section('page-title','Crear Producto')
 
-@section('sidebar-menu')
-<a href="{{ route('business.dashboard') }}" class="vs-nav-link"><i class="bi bi-grid fs-5"></i> Inicio</a>
-<a href="{{ route('business.company.edit') }}" class="vs-nav-link"><i class="bi bi-building fs-5"></i> Mi empresa</a>
-<a href="{{ route('business.products.index') }}" class="vs-nav-link active"><i class="bi bi-box fs-5"></i> Mis productos</a>
-<a href="{{ route('business.expenses.index') }}" class="vs-nav-link"><i class="bi bi-cash-stack fs-5"></i> Ventas y egresos</a>
-@endsection
-
 @section('dashboard-content')
 <div class="vs-card" style="max-width:600px">
     <div class="card-body p-4">
@@ -39,7 +32,10 @@
             </div>
             <div class="mb-3">
                 <label class="form-label text-sm fw-semibold text-dark">Imagen del producto</label>
-                <input type="file" name="image" class="form-control" accept="image/*">
+                <input type="file" name="image" id="prod_image_input" class="form-control" accept="image/jpeg,image/png,image/jpg,image/webp">
+                <small class="text-muted d-block mt-1" style="font-size: 0.75rem;">
+                    <i class="bi bi-info-circle me-1"></i>Límite máximo 2 MB. Si no deseas subir una foto, se utilizará automáticamente el logo registrado de tu empresa.
+                </small>
             </div>
             <div class="mb-4 d-flex gap-4">
                 <div class="form-check">
@@ -58,4 +54,18 @@
         </form>
     </div>
 </div>
+
+@push('scripts')
+<script>
+document.getElementById('prod_image_input')?.addEventListener('change', function() {
+    if (this.files && this.files[0]) {
+        const maxBytes = 2 * 1024 * 1024; // 2MB
+        if (this.files[0].size > maxBytes) {
+            alert('La imagen seleccionada supera el límite de 2 MB. Por favor elige una imagen más liviana.');
+            this.value = '';
+        }
+    }
+});
+</script>
+@endpush
 @endsection

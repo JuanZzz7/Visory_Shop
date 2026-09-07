@@ -2,10 +2,6 @@
 @section('title', 'Mis Chats - Spotlight')
 @section('page-title', 'Centro de Mensajes')
 
-@section('sidebar-menu')
-    @include('partials.sidebar')
-@endsection
-
 @section('dashboard-content')
 <div class="row g-4">
     <div class="col-lg-4">

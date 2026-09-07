@@ -2,14 +2,6 @@
 @section('title','Productos - Admin')
 @section('page-title','Gestión de Productos')
 
-@section('sidebar-menu')
-<a href="{{ route('admin.dashboard') }}" class="vs-nav-link"><i class="bi bi-grid fs-5"></i> Panel principal</a>
-<a href="{{ route('admin.users.index') }}" class="vs-nav-link"><i class="bi bi-people fs-5"></i> Gestión de usuarios</a>
-<a href="{{ route('admin.companies.index') }}" class="vs-nav-link"><i class="bi bi-building fs-5"></i> Gestión de empresas</a>
-<a href="{{ route('admin.products.index') }}" class="vs-nav-link active"><i class="bi bi-box fs-5"></i> Gestión de productos</a>
-<a href="{{ route('admin.reports.index') }}" class="vs-nav-link"><i class="bi bi-bar-chart fs-5"></i> Reportes generales</a>
-@endsection
-
 @section('dashboard-content')
 <div class="vs-card">
     <div class="card-body p-0">
@@ -23,13 +15,7 @@
                 <tr>
                     <td>
                         <div class="d-flex align-items-center gap-2">
-                            @if($product->image)
-                                <img src="{{ asset('storage/'.$product->image) }}" width="36" height="36" class="rounded border" style="object-fit:cover">
-                            @else
-                                <div class="rounded d-flex align-items-center justify-content-center bg-light border" style="width:36px;height:36px">
-                                    <i class="bi bi-image text-muted"></i>
-                                </div>
-                            @endif
+                            <img src="{{ $product->image_url }}" width="36" height="36" class="rounded border" style="object-fit:cover">
                             <span class="fw-semibold text-dark">{{ $product->name }}</span>
                         </div>
                     </td>

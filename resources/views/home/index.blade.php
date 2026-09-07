@@ -547,13 +547,7 @@
             @forelse($products as $product)
             <div class="col-sm-6 col-md-4 col-lg-3">
                 <div class="vs-card h-100 overflow-hidden d-flex flex-column">
-                    @if($product->image)
-                        <img src="{{ asset('storage/'.$product->image) }}" class="card-img-top" style="height:200px;object-fit:cover" alt="{{ $product->name }}">
-                    @else
-                        <div class="d-flex align-items-center justify-content-center bg-light" style="height:200px;">
-                            <i class="bi bi-box-seam text-muted" style="font-size:3rem; opacity: 0.3;"></i>
-                        </div>
-                    @endif
+                    <img src="{{ $product->image_url }}" class="card-img-top" style="height:200px;object-fit:cover" alt="{{ $product->name }}">
                     <div class="card-body d-flex flex-column p-4 flex-fill">
                         <div class="d-flex justify-content-between align-items-start mb-2">
                             <h6 class="card-title fw-bold text-dark mb-0 text-truncate" title="{{ $product->name }}">{{ $product->name }}</h6>

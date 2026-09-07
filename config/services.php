@@ -43,11 +43,6 @@ return [
     ],
 
 
-    'mailtrap' => [
-        'host'   => env('MAILTRAP_HOST'),
-        'secret' => env('MAILTRAP_SECRET'),
-    ],
-
     'gemini' => [
         'key' => env('GEMINI_API_KEY'),
     ],

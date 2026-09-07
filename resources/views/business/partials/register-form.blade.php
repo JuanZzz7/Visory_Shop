@@ -37,36 +37,55 @@
 
     <!-- Campos Comunes -->
     <div class="mb-4">
-        <label class="form-label text-sm fw-semibold text-dark mb-2">Dirección Física (Ubaté)</label>
-        <div class="input-group">
+        <label class="form-label text-sm fw-semibold text-dark mb-2">Dirección Física (Ubaté) <span class="text-danger">*</span></label>
+        <div class="input-group mb-2">
             <span class="input-group-text bg-light border-end-0"><i class="bi bi-geo-alt text-muted"></i></span>
-            <input type="text" name="address" class="form-control form-control-lg border-start-0 text-sm" value="{{ old('address', $company->address ?? '') }}" placeholder="Ej. Carrera 7 # 8-20, Ubaté" required>
+            <input type="text" name="address" id="business_address_input" class="form-control form-control-lg border-start-0 text-sm" value="{{ old('address', $company->address ?? '') }}" placeholder="Ej. Carrera 7 # 8-20, Ubaté" required autocomplete="off">
         </div>
+        <div class="d-flex align-items-center justify-content-between mb-2">
+            <small class="text-muted" style="font-size: 0.75rem;">
+                <i class="bi bi-info-circle me-1"></i>Escribe la dirección o haz clic en el mapa para fijar tu ubicación.
+            </small>
+            <span id="map-status-badge" class="badge bg-light text-muted border px-2 py-1" style="font-size: 0.7rem;">
+                <i class="bi bi-geo-fill me-1" style="color: var(--vs-secondary);"></i>Listo
+            </span>
+        </div>
+
+        {{-- Mapa Interactivo de Ubicación --}}
+        <div id="register-map-container" class="rounded-3 border overflow-hidden position-relative shadow-sm" style="height: 220px; background: #e2e8f0;">
+            <div id="company_reg_map" style="width: 100%; height: 100%; min-height: 220px;"></div>
+        </div>
+        <input type="hidden" name="latitude" id="business_lat" value="{{ old('latitude', $company->latitude ?? 5.3086) }}">
+        <input type="hidden" name="longitude" id="business_lng" value="{{ old('longitude', $company->longitude ?? -73.8149) }}">
     </div>
 
     <!-- Contenedor: Empresa Formal -->
     <div id="container-formal" class="business-fields-container animate-fade-in">
-        <h6 class="fw-bold text-primary mb-3"><i class="bi bi-file-earmark-text me-1"></i> Datos de Empresa Formal</h6>
+        <h6 class="fw-bold mb-3" style="color: var(--vs-primary);"><i class="bi bi-file-earmark-text me-1"></i> Datos de Empresa Formal</h6>
         <div class="row g-3 mb-3">
             <div class="col-md-6">
                 <label class="form-label text-sm fw-medium text-dark mb-1">Razón Social <span class="text-danger">*</span></label>
-                <input type="text" name="razon_social" class="form-control text-sm" value="{{ old('razon_social', $company->razon_social ?? '') }}" placeholder="Nombre legal de la empresa">
+                <input type="text" name="razon_social" class="form-control text-sm" value="{{ old('razon_social', $company->razon_social ?? '') }}" placeholder="Nombre legal (Solo letras)" pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]+$" oninput="this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]/g, '')">
+                <small class="text-muted" style="font-size: 0.72rem;">Solo caracteres alfabéticos (A-Z, a-z)</small>
             </div>
             <div class="col-md-6">
                 <label class="form-label text-sm fw-medium text-dark mb-1">NIT <span class="text-danger">*</span></label>
-                <input type="text" name="nit" class="form-control text-sm" value="{{ old('nit', $company->nit ?? '') }}" placeholder="Ej. 900123456-1">
+                <input type="text" name="nit" class="form-control text-sm" value="{{ old('nit', $company->nit ?? '') }}" placeholder="Ej. 900123456" inputmode="numeric" pattern="^[0-9]+$" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                <small class="text-muted" style="font-size: 0.72rem;">Solo números de 0-9</small>
             </div>
         </div>
 
-        <h6 class="fw-bold text-primary mb-3 mt-4"><i class="bi bi-person-badge me-1"></i> Representante Legal</h6>
+        <h6 class="fw-bold mb-3 mt-4" style="color: var(--vs-primary);"><i class="bi bi-person-badge me-1"></i> Representante Legal</h6>
         <div class="row g-3 mb-3">
             <div class="col-md-4">
                 <label class="form-label text-sm fw-medium text-dark mb-1">Nombre Completo <span class="text-danger">*</span></label>
-                <input type="text" name="nombre_representante" class="form-control text-sm" value="{{ old('nombre_representante', $company->nombre_representante ?? '') }}" placeholder="Ej. Juan Pérez">
+                <input type="text" name="nombre_representante" class="form-control text-sm" value="{{ old('nombre_representante', $company->nombre_representante ?? '') }}" placeholder="Ej. Juan Pérez" pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]+$" oninput="this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]/g, '')">
+                <small class="text-muted" style="font-size: 0.72rem;">Solo letras (A-Z, a-z)</small>
             </div>
             <div class="col-md-4">
                 <label class="form-label text-sm fw-medium text-dark mb-1">Cédula <span class="text-danger">*</span></label>
-                <input type="text" name="cedula_propietario" class="form-control text-sm" value="{{ old('cedula_propietario', $company->cedula_propietario ?? '') }}" placeholder="Cédula de ciudadanía">
+                <input type="text" name="cedula_propietario" class="form-control text-sm" value="{{ old('cedula_propietario', $company->cedula_propietario ?? '') }}" placeholder="Cédula de ciudadanía" inputmode="numeric" pattern="^[0-9]+$" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                <small class="text-muted" style="font-size: 0.72rem;">Solo números de 0-9</small>
             </div>
             <div class="col-md-4">
                 <label class="form-label text-sm fw-medium text-dark mb-1">Correo Electrónico <span class="text-danger">*</span></label>
@@ -74,38 +93,40 @@
             </div>
         </div>
 
-        <h6 class="fw-bold text-primary mb-3 mt-4"><i class="bi bi-files me-1"></i> Documentos Adjuntos</h6>
+        <h6 class="fw-bold mb-3 mt-4" style="color: var(--vs-primary);"><i class="bi bi-files me-1"></i> Documentos Adjuntos</h6>
         <div class="row g-3 mb-4">
             <div class="col-md-6">
                 <label class="form-label text-sm fw-medium text-dark mb-1">Cámara de Comercio (PDF) <span class="text-danger">*</span></label>
-                <input type="file" name="camara_comercio_file" class="form-control text-sm" accept=".pdf" {{ $docsDisabled ? 'disabled data-locked="true"' : '' }}>
-                <small class="text-muted" style="font-size: 0.75rem;">Debe ser reciente (Máx. 5MB).</small>
+                <input type="file" name="camara_comercio_file" class="form-control text-sm" accept="application/pdf,.pdf" {{ $docsDisabled ? 'disabled data-locked="true"' : '' }}>
+                <small class="text-danger fw-semibold d-block mt-1" style="font-size: 0.72rem;"><i class="bi bi-file-earmark-pdf me-1"></i>Obligatorio en formato PDF (Máx. 5MB).</small>
             </div>
             <div class="col-md-6">
                 <label class="form-label text-sm fw-medium text-dark mb-1">RUT (PDF) <span class="text-danger">*</span></label>
-                <input type="file" name="rut_file" class="form-control text-sm" accept=".pdf" {{ $docsDisabled ? 'disabled data-locked="true"' : '' }}>
-                <small class="text-muted" style="font-size: 0.75rem;">Máx. 5MB.</small>
+                <input type="file" name="rut_file" class="form-control text-sm" accept="application/pdf,.pdf" {{ $docsDisabled ? 'disabled data-locked="true"' : '' }}>
+                <small class="text-danger fw-semibold d-block mt-1" style="font-size: 0.72rem;"><i class="bi bi-file-earmark-pdf me-1"></i>Obligatorio en formato PDF (Máx. 5MB).</small>
             </div>
         </div>
     </div>
 
     <!-- Contenedor: Emprendimiento Informal -->
     <div id="container-informal" class="business-fields-container animate-fade-in" style="display: none;">
-        <h6 class="fw-bold text-success mb-3"><i class="bi bi-person-badge me-1"></i> Datos del Emprendedor</h6>
+        <h6 class="fw-bold mb-3" style="color: var(--vs-secondary);"><i class="bi bi-person-badge me-1"></i> Datos del Emprendedor</h6>
         <div class="row g-3 mb-3">
             <div class="col-md-6">
                 <label class="form-label text-sm fw-medium text-dark mb-1">Nombre Comercial <span class="text-danger">*</span></label>
-                <input type="text" name="nombre_comercial" class="form-control text-sm" value="{{ old('nombre_comercial', $company->nombre_comercial ?? '') }}" placeholder="¿Cómo conocen tu negocio?">
+                <input type="text" name="nombre_comercial" class="form-control text-sm" value="{{ old('nombre_comercial', $company->nombre_comercial ?? '') }}" placeholder="¿Cómo conocen tu negocio?" pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]+$" oninput="this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]/g, '')">
+                <small class="text-muted" style="font-size: 0.72rem;">Solo letras (A-Z, a-z)</small>
             </div>
             <div class="col-md-6">
                 <label class="form-label text-sm fw-medium text-dark mb-1">Cédula del Propietario <span class="text-danger">*</span></label>
-                <input type="text" name="cedula_propietario" class="form-control text-sm" value="{{ old('cedula_propietario', $company->cedula_propietario ?? '') }}" placeholder="Número de identificación">
+                <input type="text" name="cedula_propietario" class="form-control text-sm" value="{{ old('cedula_propietario', $company->cedula_propietario ?? '') }}" placeholder="Número de identificación" inputmode="numeric" pattern="^[0-9]+$" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                <small class="text-muted" style="font-size: 0.72rem;">Solo números de 0-9</small>
             </div>
         </div>
         <div class="mb-4">
-            <label class="form-label text-sm fw-medium text-dark mb-1">RUT Personal (Opcional pero recomendado)</label>
-            <input type="file" name="rut_personal_file" class="form-control text-sm" accept=".pdf" {{ $docsDisabled ? 'disabled data-locked="true"' : '' }}>
-            <small class="text-muted" style="font-size: 0.75rem;">Si posees RUT personal, adjúntalo (Máx. 5MB).</small>
+            <label class="form-label text-sm fw-medium text-dark mb-1">RUT Personal (PDF opcional)</label>
+            <input type="file" name="rut_personal_file" class="form-control text-sm" accept="application/pdf,.pdf" {{ $docsDisabled ? 'disabled data-locked="true"' : '' }}>
+            <small class="text-muted" style="font-size: 0.75rem;">Si posees RUT personal, adjúntalo en formato PDF (Máx. 5MB).</small>
         </div>
     </div>
 
@@ -166,7 +187,7 @@ document.addEventListener("DOMContentLoaded", function() {
         return new bootstrap.Tooltip(tooltipTriggerEl);
     });
 
-    // Lógica para alternar vistas
+    // Lógica para alternar vistas formal/informal
     const radioFormal = document.getElementById('tipo_formal');
     const radioInformal = document.getElementById('tipo_informal');
     const containerFormal = document.getElementById('container-formal');
@@ -176,7 +197,6 @@ document.addEventListener("DOMContentLoaded", function() {
         if (radioFormal.checked) {
             containerFormal.style.display = 'block';
             containerInformal.style.display = 'none';
-            // Disable informal fields so they don't validate/submit empty
             toggleFieldsDisabled(containerInformal, true);
             toggleFieldsDisabled(containerFormal, false);
         } else {
@@ -191,19 +211,145 @@ document.addEventListener("DOMContentLoaded", function() {
         const inputs = container.querySelectorAll('input');
         inputs.forEach(input => {
             if (input.hasAttribute('data-locked')) {
-                input.disabled = true; // Always keep disabled if locked
+                input.disabled = true;
             } else {
                 input.disabled = disabledState;
             }
         });
     }
 
-    // Inicializar estado
     toggleForms();
-
-    // Listeners
     radioFormal.addEventListener('change', toggleForms);
     radioInformal.addEventListener('change', toggleForms);
+
+    // ─── Mapa Interactivo para la Dirección (Requerimiento 4) ───
+    function initRegisterMap() {
+        const mapEl = document.getElementById('company_reg_map');
+        if (!mapEl || typeof L === 'undefined') return;
+        if (window._regMapInstance) return; // Evitar reinicialización duplicada
+
+        const latInput = document.getElementById('business_lat');
+        const lngInput = document.getElementById('business_lng');
+        const addrInput = document.getElementById('business_address_input');
+        const statusBadge = document.getElementById('map-status-badge');
+
+        let defaultLat = parseFloat(latInput.value) || 5.3086;
+        let defaultLng = parseFloat(lngInput.value) || -73.8149;
+
+        try {
+            delete L.Icon.Default.prototype._getIconUrl;
+            L.Icon.Default.mergeOptions({
+                iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon-2x.png',
+                iconUrl:       'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon.png',
+                shadowUrl:     'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
+            });
+
+            const regMap = L.map(mapEl).setView([defaultLat, defaultLng], 14);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; OpenStreetMap',
+                maxZoom: 19
+            }).addTo(regMap);
+
+            let marker = L.marker([defaultLat, defaultLng], { draggable: true }).addTo(regMap);
+            window._regMapInstance = regMap;
+            window._regMarkerInstance = marker;
+
+            function setCoords(lat, lng) {
+                latInput.value = lat.toFixed(8);
+                lngInput.value = lng.toFixed(8);
+                marker.setLatLng([lat, lng]);
+            }
+
+            // Al hacer clic o arrastrar en el mapa: actualizar coordenadas y dirección
+            function handleMapPick(lat, lng) {
+                setCoords(lat, lng);
+                if (statusBadge) {
+                    statusBadge.innerHTML = '<span class="spinner-border spinner-border-sm me-1" style="width:10px;height:10px;"></span>Buscando dirección...';
+                }
+                fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json&accept-language=es`)
+                    .then(r => r.json())
+                    .then(data => {
+                        const a = data.address || {};
+                        let str = '';
+                        if (a.road) str += a.road;
+                        if (a.house_number) str += ' #' + a.house_number;
+                        const town = a.town || a.city || a.municipality || 'Ubaté';
+                        if (town) str += (str ? ', ' : '') + town;
+                        if (!str && data.display_name) str = data.display_name.split(',').slice(0, 3).join(', ');
+                        if (str && addrInput) {
+                            addrInput.value = str;
+                        }
+                        if (statusBadge) {
+                            statusBadge.className = 'badge bg-success bg-opacity-10 text-success border border-success px-2 py-1';
+                            statusBadge.innerHTML = '<i class="bi bi-check-circle-fill me-1"></i>Ubicado en mapa';
+                        }
+                    })
+                    .catch(() => {
+                        if (statusBadge) {
+                            statusBadge.className = 'badge bg-light text-muted border px-2 py-1';
+                            statusBadge.innerHTML = '<i class="bi bi-geo-alt me-1"></i>Punto seleccionado';
+                        }
+                    });
+            }
+
+            regMap.on('click', e => handleMapPick(e.latlng.lat, e.latlng.lng));
+            marker.on('dragend', () => {
+                const pos = marker.getLatLng();
+                handleMapPick(pos.lat, pos.lng);
+            });
+
+            // Al digitar en el campo de dirección: reflejarlo en el mapa (Geocodificación)
+            let debounceTimer = null;
+            if (addrInput) {
+                addrInput.addEventListener('input', function() {
+                    const query = this.value.trim();
+                    if (query.length < 4) return;
+
+                    if (statusBadge) {
+                        statusBadge.className = 'badge bg-warning bg-opacity-10 text-warning border border-warning px-2 py-1';
+                        statusBadge.innerHTML = '<span class="spinner-border spinner-border-sm me-1" style="width:10px;height:10px;"></span>Buscando en mapa...';
+                    }
+
+                    clearTimeout(debounceTimer);
+                    debounceTimer = setTimeout(() => {
+                        // Priorizar búsqueda en Ubaté y Colombia
+                        const fullQuery = query.toLowerCase().includes('ubat') ? query : `${query}, Ubaté, Cundinamarca, Colombia`;
+                        fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(fullQuery)}&accept-language=es&limit=1`)
+                            .then(r => r.json())
+                            .then(results => {
+                                if (results && results.length > 0) {
+                                    const lat = parseFloat(results[0].lat);
+                                    const lon = parseFloat(results[0].lon);
+                                    setCoords(lat, lon);
+                                    regMap.setView([lat, lon], 15);
+                                    if (statusBadge) {
+                                        statusBadge.className = 'badge bg-success bg-opacity-10 text-success border border-success px-2 py-1';
+                                        statusBadge.innerHTML = '<i class="bi bi-check-circle-fill me-1"></i>Reflejado en mapa';
+                                    }
+                                } else {
+                                    if (statusBadge) {
+                                        statusBadge.className = 'badge bg-light text-muted border px-2 py-1';
+                                        statusBadge.innerHTML = '<i class="bi bi-pin-map me-1"></i>Fija el punto en el mapa';
+                                    }
+                                }
+                            })
+                            .catch(() => {});
+                    }, 600);
+                });
+            }
+
+            setTimeout(() => regMap.invalidateSize(), 400);
+
+        } catch (e) {
+            console.error('Error al inicializar mapa en registro:', e);
+        }
+    }
+
+    // Inicializar mapa si ya está visible o registrar global para disparar en paso 2
+    window.initCompanyRegMap = initRegisterMap;
+    if (document.getElementById('company_reg_map') && document.getElementById('step-2')?.style.display !== 'none') {
+        setTimeout(initRegisterMap, 200);
+    }
 });
 </script>
 

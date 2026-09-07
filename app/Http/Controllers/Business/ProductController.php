@@ -33,9 +33,12 @@ class ProductController extends Controller
             'description' => 'nullable|string',
             'price'       => 'required|numeric|min:0',
             'stock'       => 'required|integer|min:0',
-            'image'       => 'nullable|image|max:2048',
+            'image'       => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
             'active'      => 'nullable|boolean',
             'featured'    => 'nullable|boolean',
+        ], [
+            'image.max'   => 'La imagen del producto no puede superar los 2 MB por capacidad del sistema.',
+            'image.image' => 'El archivo debe ser una imagen válida (JPG, PNG, WebP).',
         ]);
 
         $company = $this->company();
@@ -49,10 +52,13 @@ class ProductController extends Controller
 
         if ($request->hasFile('image')) {
             $data['image'] = $request->file('image')->store('products', 'public');
+        } else {
+            // Si el comerciante no quiere subir foto, usar el logo de su empresa
+            $data['image'] = $company->logo ?? null;
         }
 
         $company->products()->create($data);
-        return redirect()->route('business.products.index')->with('success', 'Producto creado.');
+        return redirect()->route('business.products.index')->with('success', 'Producto creado exitosamente.');
     }
 
     public function edit(Product $product)
@@ -68,7 +74,10 @@ class ProductController extends Controller
             'name'  => 'required|string|max:255',
             'price' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0',
-            'image' => 'nullable|image|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+        ], [
+            'image.max'   => 'La imagen del producto no puede superar los 2 MB por capacidad del sistema.',
+            'image.image' => 'El archivo debe ser una imagen válida (JPG, PNG, WebP).',
         ]);
 
         $data = $request->except(['image', '_token', '_method']);

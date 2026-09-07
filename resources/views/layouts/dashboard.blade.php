@@ -21,7 +21,7 @@
             <div class="text-white text-sm fw-medium text-truncate mt-1">{{ auth()->user()->name }}</div>
         </div>
         <nav class="flex-fill p-3 d-flex flex-column gap-1">
-            @yield('sidebar-menu')
+            @include('partials.sidebar')
         </nav>
         <div class="p-3 border-top" style="border-color: rgba(255,255,255,0.1) !important;">
             <form action="{{ route('logout') }}" method="POST">

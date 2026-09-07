@@ -24,7 +24,7 @@ class GoogleVerificationMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: '🔐 Tu código de verificación — Spotlight',
+            subject: 'Código de verificación de cuenta — Spotlight',
         );
     }
 

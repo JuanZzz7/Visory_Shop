@@ -2,24 +2,6 @@
 @section('title','Empresario - Spotlight')
 @section('page-title','Panel Empresario')
 
-@section('sidebar-menu')
-<a href="{{ route('business.dashboard') }}" class="vs-nav-link {{ request()->routeIs('business.dashboard') ? 'active' : '' }}">
-    <i class="bi bi-grid fs-5"></i> Inicio
-</a>
-<a href="{{ route('business.company.edit') }}" class="vs-nav-link {{ request()->routeIs('business.company*') ? 'active' : '' }}">
-    <i class="bi bi-building fs-5"></i> Mi empresa
-</a>
-<a href="{{ route('business.products.index') }}" class="vs-nav-link {{ request()->routeIs('business.products*') ? 'active' : '' }}">
-    <i class="bi bi-box fs-5"></i> Mis productos
-</a>
-<a href="{{ route('business.expenses.index') }}" class="vs-nav-link {{ request()->routeIs('business.expenses*') ? 'active' : '' }}">
-    <i class="bi bi-cash-stack fs-5"></i> Ventas y egresos
-</a>
-<a href="{{ route('chat.index') }}" class="vs-nav-link {{ request()->is('chat*') ? 'active' : '' }}">
-    <i class="bi bi-chat-dots fs-5"></i> Mensajes
-</a>
-@endsection
-
 @section('dashboard-content')
 @if(!$company)
     <div class="alert alert-warning border-0" style="background-color: rgba(217, 119, 6, 0.1); color: #d97706;">
