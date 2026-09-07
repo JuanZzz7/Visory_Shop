@@ -2,14 +2,6 @@
 @section('title','Usuarios - Admin')
 @section('page-title','Gestión de Usuarios')
 
-@section('sidebar-menu')
-<a href="{{ route('admin.dashboard') }}" class="vs-nav-link"><i class="bi bi-grid fs-5"></i> Panel principal</a>
-<a href="{{ route('admin.users.index') }}" class="vs-nav-link active"><i class="bi bi-people fs-5"></i> Gestión de usuarios</a>
-<a href="{{ route('admin.companies.index') }}" class="vs-nav-link"><i class="bi bi-building fs-5"></i> Gestión de empresas</a>
-<a href="{{ route('admin.products.index') }}" class="vs-nav-link"><i class="bi bi-box fs-5"></i> Gestión de productos</a>
-<a href="{{ route('admin.reports.index') }}" class="vs-nav-link"><i class="bi bi-bar-chart fs-5"></i> Reportes generales</a>
-@endsection
-
 @section('dashboard-content')
 <div class="d-flex justify-content-between align-items-center mb-4">
     <div class="d-flex gap-2">

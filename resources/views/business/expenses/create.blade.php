@@ -2,13 +2,6 @@
 @section('title','Registrar Egreso')
 @section('page-title','Registrar Egreso')
 
-@section('sidebar-menu')
-<a href="{{ route('business.dashboard') }}" class="vs-nav-link"><i class="bi bi-grid fs-5"></i> Inicio</a>
-<a href="{{ route('business.company.edit') }}" class="vs-nav-link"><i class="bi bi-building fs-5"></i> Mi empresa</a>
-<a href="{{ route('business.products.index') }}" class="vs-nav-link"><i class="bi bi-box fs-5"></i> Mis productos</a>
-<a href="{{ route('business.expenses.index') }}" class="vs-nav-link active"><i class="bi bi-cash-stack fs-5"></i> Ventas y egresos</a>
-@endsection
-
 @section('dashboard-content')
 <div class="vs-card" style="max-width:500px">
     <div class="card-body p-4">

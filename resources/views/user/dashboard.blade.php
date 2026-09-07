@@ -2,34 +2,6 @@
 @section('title','Tienda - Spotlight')
 @section('page-title','Explorar Productos')
 
-@section('sidebar-menu')
-<a href="{{ route('user.dashboard') }}" class="vs-nav-link {{ request()->routeIs('user.dashboard') ? 'active' : '' }}">
-    <i class="bi bi-shop fs-5"></i> Tienda
-</a>
-<a href="{{ route('user.map') }}" class="vs-nav-link {{ request()->routeIs('user.map') ? 'active' : '' }}">
-    <i class="bi bi-geo-alt fs-5"></i> Mapa de Empresas
-</a>
-
-<a href="{{ route('user.profile.edit') }}" class="vs-nav-link {{ request()->routeIs('user.profile*') ? 'active' : '' }}">
-    <i class="bi bi-person fs-5"></i> Mi perfil
-</a>
-<a href="{{ route('user.orders.index') }}" class="vs-nav-link {{ request()->routeIs('user.orders*') ? 'active' : '' }}">
-    <i class="bi bi-bag-check fs-5"></i> Mis compras
-</a>
-<a href="{{ route('user.cart.index') }}" class="vs-nav-link {{ request()->routeIs('user.cart*') ? 'active' : '' }}">
-    <i class="bi bi-cart3 fs-5"></i> Carrito
-    @if(session('cart') && count(session('cart')) > 0)
-        <span class="badge ms-auto" style="background-color: var(--vs-secondary);">{{ count(session('cart')) }}</span>
-    @endif
-</a>
-<a href="{{ route('chat.index') }}" class="vs-nav-link {{ request()->is('chat*') ? 'active' : '' }}">
-    <i class="bi bi-chat-dots fs-5"></i> Mensajes
-</a>
-<a href="{{ route('chatbot.index') }}" class="vs-nav-link {{ request()->routeIs('chatbot.index') ? 'active' : '' }}">
-    <i class="bi bi-robot fs-5"></i> Spotlight AI
-</a>
-@endsection
-
 @section('dashboard-content')
 {{-- Filtros --}}
 <div class="vs-card mb-4">
@@ -69,13 +41,7 @@
 @forelse($products as $product)
 <div class="col-sm-6 col-lg-4 col-xl-3">
     <div class="vs-card h-100 overflow-hidden d-flex flex-column">
-        @if($product->image)
-            <img src="{{ asset('storage/'.$product->image) }}" class="card-img-top" style="height:180px;object-fit:cover" alt="{{ $product->name }}">
-        @else
-            <div class="d-flex align-items-center justify-content-center bg-light" style="height:180px;">
-                <i class="bi bi-image text-muted" style="font-size:3rem; opacity: 0.5;"></i>
-            </div>
-        @endif
+        <img src="{{ $product->image_url }}" class="card-img-top" style="height:180px;object-fit:cover" alt="{{ $product->name }}">
         <div class="card-body d-flex flex-column flex-fill">
             <h6 class="fw-semibold mb-1 text-dark text-truncate" title="{{ $product->name }}">{{ $product->name }}</h6>
             <div class="d-flex align-items-center text-muted text-sm mb-2">

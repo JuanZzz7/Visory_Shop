@@ -46,7 +46,7 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $rules = [
-            'name'     => 'required|string|max:255',
+            'name'     => ['required', 'string', 'max:255', 'regex:/^[\pL\s]+$/u'],
             'email'    => 'required|email|unique:users',
             'password' => 'required|confirmed|min:8',
             'role'     => 'required|in:user,business',
@@ -60,12 +60,17 @@ class AuthController extends Controller
                 'tipo_negocio', 'habeas_data_accepted', 'address',
                 'razon_social', 'nit', 'camara_comercio_file', 'rut_file',
                 'nombre_comercial', 'cedula_propietario', 'rut_personal_file',
-                'nombre_representante', 'email_representante'
+                'nombre_representante', 'email_representante',
+                'latitude', 'longitude'
             ]));
             $rules = array_merge($rules, $businessRulesToMerge);
         }
 
-        $request->validate($rules, (new \App\Http\Requests\BusinessRegisterRequest())->messages());
+        $customMessages = array_merge((new \App\Http\Requests\BusinessRegisterRequest())->messages(), [
+            'name.regex' => 'El nombre completo solo puede contener caracteres alfabéticos (A-Z, a-z).',
+        ]);
+
+        $request->validate($rules, $customMessages);
 
         $user = User::create([
             'name'     => $request->name,
@@ -76,8 +81,9 @@ class AuthController extends Controller
 
         if ($user->role === 'business') {
             $companyData = $request->only([
-                'tipo_negocio', 'razon_social', 'nit', 'nombre_comercial', 'cedula_propietario', 'habeas_data_accepted', 'address', 'nombre_representante', 'email_representante'
+                'tipo_negocio', 'razon_social', 'nit', 'nombre_comercial', 'cedula_propietario', 'habeas_data_accepted', 'address', 'nombre_representante', 'email_representante', 'latitude', 'longitude'
             ]);
+            $companyData['status'] = 'active';
             $companyData['user_id'] = $user->id;
             
             // Si el name general fue insertado, lo mapeamos si faltó el de la empresa

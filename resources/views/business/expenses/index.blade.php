@@ -2,13 +2,6 @@
 @section('title','Ventas y Egresos')
 @section('page-title','Ventas e Información Financiera')
 
-@section('sidebar-menu')
-<a href="{{ route('business.dashboard') }}" class="vs-nav-link"><i class="bi bi-grid fs-5"></i> Inicio</a>
-<a href="{{ route('business.company.edit') }}" class="vs-nav-link"><i class="bi bi-building fs-5"></i> Mi empresa</a>
-<a href="{{ route('business.products.index') }}" class="vs-nav-link"><i class="bi bi-box fs-5"></i> Mis productos</a>
-<a href="{{ route('business.expenses.index') }}" class="vs-nav-link active"><i class="bi bi-cash-stack fs-5"></i> Ventas y egresos</a>
-@endsection
-
 @section('dashboard-content')
 <div class="d-flex justify-content-end mb-4">
     <a href="{{ route('business.expenses.create') }}" class="btn btn-primary shadow-sm"><i class="bi bi-plus me-1"></i>Registrar egreso</a>

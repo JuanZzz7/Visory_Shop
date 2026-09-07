@@ -2,31 +2,6 @@
 @section('title','Mapa Interactivo - Spotlight')
 @section('page-title','Explorar Negocios Locales')
 
-@section('sidebar-menu')
-<a href="{{ route('user.dashboard') }}" class="vs-nav-link {{ request()->routeIs('user.dashboard') ? 'active' : '' }}">
-    <i class="bi bi-shop fs-5"></i> Tienda
-</a>
-<a href="{{ route('user.map') }}" class="vs-nav-link {{ request()->routeIs('user.map') ? 'active' : '' }}">
-    <i class="bi bi-geo-alt fs-5"></i> Mapa de Empresas
-</a>
-
-<a href="{{ route('user.profile.edit') }}" class="vs-nav-link {{ request()->routeIs('user.profile*') ? 'active' : '' }}">
-    <i class="bi bi-person fs-5"></i> Mi perfil
-</a>
-<a href="{{ route('user.orders.index') }}" class="vs-nav-link {{ request()->routeIs('user.orders*') ? 'active' : '' }}">
-    <i class="bi bi-bag-check fs-5"></i> Mis compras
-</a>
-<a href="{{ route('user.cart.index') }}" class="vs-nav-link {{ request()->routeIs('user.cart*') ? 'active' : '' }}">
-    <i class="bi bi-cart3 fs-5"></i> Carrito
-</a>
-<a href="{{ route('chat.index') }}" class="vs-nav-link {{ request()->is('chat*') ? 'active' : '' }}">
-    <i class="bi bi-chat-dots fs-5"></i> Mensajes
-</a>
-<a href="{{ route('chatbot.index') }}" class="vs-nav-link {{ request()->routeIs('chatbot.index') ? 'active' : '' }}">
-    <i class="bi bi-robot fs-5"></i> Spotlight AI
-</a>
-@endsection
-
 @push('styles')
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
 <style>

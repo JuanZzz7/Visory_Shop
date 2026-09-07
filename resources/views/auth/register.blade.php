@@ -1,5 +1,8 @@
 @extends('layouts.app')
 @section('title','Registrarse - Spotlight')
+@push('styles')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+@endpush
 @section('content')
 <div class="min-vh-100 d-flex align-items-center justify-content-center" style="background-color: var(--vs-bg-color);">
     <div class="vs-card border-0" style="width: 100%; max-width: 900px; border-radius: var(--vs-radius-xl); overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.15);">
@@ -61,24 +64,52 @@
                     @csrf
                     <div id="step-1">
                         <div class="mb-3">
-                        <label class="form-label text-sm fw-semibold text-dark mb-2">Nombre completo</label>
-                        <input type="text" name="name" class="form-control form-control-lg text-sm" placeholder="Tu nombre completo" value="{{ old('name') }}" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label text-sm fw-semibold text-dark mb-2">Correo electrónico</label>
-                        <input type="email" name="email" class="form-control form-control-lg text-sm" placeholder="ejemplo@correo.com" value="{{ old('email') }}" required>
-                    </div>
-                    <div class="row g-3 mb-3">
-                        <div class="col-6">
-                            <label class="form-label text-sm fw-semibold text-dark mb-2">Contraseña</label>
-                            <input type="password" name="password" class="form-control form-control-lg text-sm" placeholder="••••••••" required>
+                            <label class="form-label text-sm fw-semibold text-dark mb-1">Nombre completo</label>
+                            <input type="text" name="name" id="reg_name" class="form-control form-control-lg text-sm" placeholder="Tu nombre completo" value="{{ old('name') }}" required pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]+$" oninput="this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s]/g, '')" autocomplete="name">
                         </div>
-                        <div class="col-6">
-                            <label class="form-label text-sm fw-semibold text-dark mb-2">Confirmar contraseña</label>
-                            <input type="password" name="password_confirmation" class="form-control form-control-lg text-sm" placeholder="••••••••" required>
+                        <div class="mb-3">
+                            <label class="form-label text-sm fw-semibold text-dark mb-1">Correo electrónico</label>
+                            <input type="email" name="email" class="form-control form-control-lg text-sm" placeholder="ejemplo@correo.com" value="{{ old('email') }}" required autocomplete="email">
                         </div>
-                    </div>
-                    <input type="hidden" name="role" id="role_input" value="{{ old('role', 'user') }}">
+                        <div class="row g-3 mb-2">
+                            <div class="col-6">
+                                <label class="form-label text-sm fw-semibold text-dark mb-1">Contraseña</label>
+                                <input type="password" name="password" id="reg_password" class="form-control form-control-lg text-sm" placeholder="••••••••" required autocomplete="new-password">
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label text-sm fw-semibold text-dark mb-1">Confirmar contraseña</label>
+                                <input type="password" name="password_confirmation" id="reg_password_conf" class="form-control form-control-lg text-sm" placeholder="••••••••" required autocomplete="new-password">
+                            </div>
+                        </div>
+
+                        {{-- Widget: Términos mínimos para una contraseña segura --}}
+                        <div id="pwd-checklist-card" class="p-3 mb-3 rounded-3" style="background: rgba(13, 148, 136, 0.05); border: 1px solid rgba(13, 148, 136, 0.2); transition: all 0.3s ease;">
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <span class="text-xs fw-bold" style="color: var(--vs-primary);">
+                                    <i class="bi bi-shield-lock me-1"></i>Requisitos para una contraseña segura:
+                                </span>
+                                <span id="pwd-strength-badge" class="badge rounded-pill text-xs px-2 py-1" style="background-color: var(--vs-primary); color: #fff;">Pendiente</span>
+                            </div>
+                            <ul class="list-unstyled mb-0 d-flex flex-column gap-1 text-xs">
+                                <li id="rule-min8" class="d-flex align-items-center gap-2 text-muted">
+                                    <i class="bi bi-circle text-muted" id="rule-icon-min8"></i>
+                                    <span>Mínimo 8 caracteres</span>
+                                </li>
+                                <li id="rule-casing" class="d-flex align-items-center gap-2 text-muted">
+                                    <i class="bi bi-circle text-muted" id="rule-icon-casing"></i>
+                                    <span>Al menos una letra (mayúscula o minúscula)</span>
+                                </li>
+                                <li id="rule-number" class="d-flex align-items-center gap-2 text-muted">
+                                    <i class="bi bi-circle text-muted" id="rule-icon-number"></i>
+                                    <span>Al menos un número o símbolo especial</span>
+                                </li>
+                                <li id="rule-match" class="d-flex align-items-center gap-2 text-muted">
+                                    <i class="bi bi-circle text-muted" id="rule-icon-match"></i>
+                                    <span>Las contraseñas deben coincidir</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <input type="hidden" name="role" id="role_input" value="{{ old('role', 'user') }}">
 
                     <div id="action-buttons-step1">
                         <button type="submit" id="btn-submit-user" class="btn btn-primary btn-lg w-100 fw-semibold shadow-sm mb-3">Registrarse como Usuario</button>
@@ -119,6 +150,7 @@
 </div>
 
 @push('scripts')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
@@ -182,6 +214,65 @@ document.addEventListener('DOMContentLoaded', () => {
     gsap.utils.toArray(".login-bg-svg .g").forEach(($el) => Line($el));
     gsap.to(".login-bg-svg", { opacity: 1, duration: 1 });
 
+    // --- Dynamic Password Terms Validator (Brand styled) ---
+    const pwdInput = document.getElementById('reg_password');
+    const pwdConfInput = document.getElementById('reg_password_conf');
+    const badge = document.getElementById('pwd-strength-badge');
+
+    function updateRule(liId, iconId, isValid) {
+        const li = document.getElementById(liId);
+        const icon = document.getElementById(iconId);
+        if (!li || !icon) return;
+        if (isValid) {
+            li.style.color = 'var(--vs-secondary)';
+            li.style.fontWeight = '600';
+            icon.className = 'bi bi-check-circle-fill';
+            icon.style.color = 'var(--vs-secondary)';
+        } else {
+            li.style.color = '';
+            li.className = 'd-flex align-items-center gap-2 text-muted';
+            icon.className = 'bi bi-circle text-muted';
+            icon.style.color = '';
+        }
+    }
+
+    function checkPasswordSecurity() {
+        const val = pwdInput.value || '';
+        const confVal = pwdConfInput.value || '';
+
+        const hasMin8 = val.length >= 8;
+        const hasCasing = /[a-z]/.test(val) && /[A-Z]/.test(val);
+        const hasNumber = /[0-9\W]/.test(val);
+        const hasMatch = val.length > 0 && confVal.length > 0 && val === confVal;
+
+        updateRule('rule-min8', 'rule-icon-min8', hasMin8);
+        updateRule('rule-casing', 'rule-icon-casing', hasCasing);
+        updateRule('rule-number', 'rule-icon-number', hasNumber);
+        updateRule('rule-match', 'rule-icon-match', hasMatch);
+
+        const score = [hasMin8, hasCasing, hasNumber, hasMatch].filter(Boolean).length;
+        if (!badge) return;
+
+        if (val.length === 0) {
+            badge.textContent = 'Pendiente';
+            badge.style.backgroundColor = 'var(--vs-primary)';
+        } else if (score === 4) {
+            badge.textContent = 'Segura ✓';
+            badge.style.backgroundColor = 'var(--vs-secondary)';
+        } else if (score >= 2) {
+            badge.textContent = 'Media';
+            badge.style.backgroundColor = '#f59e0b';
+        } else {
+            badge.textContent = 'Débil';
+            badge.style.backgroundColor = '#ef4444';
+        }
+    }
+
+    if (pwdInput && pwdConfInput) {
+        pwdInput.addEventListener('input', checkPasswordSecurity);
+        pwdConfInput.addEventListener('input', checkPasswordSecurity);
+    }
+
     // --- Stepper Logic ---
     const roleInput = document.getElementById('role_input');
     const btnNextStep = document.getElementById('btn-next-step');
@@ -195,8 +286,6 @@ document.addEventListener('DOMContentLoaded', () => {
     function goToStep2() {
         const nameInput = document.querySelector('#step-1 input[name="name"]');
         const emailInput = document.querySelector('#step-1 input[name="email"]');
-        const pwdInput = document.querySelector('#step-1 input[name="password"]');
-        const pwdConfInput = document.querySelector('#step-1 input[name="password_confirmation"]');
         
         // Validation before proceeding
         if (!nameInput.value || !emailInput.value || !pwdInput.value || !pwdConfInput.value) {
@@ -226,6 +315,11 @@ document.addEventListener('DOMContentLoaded', () => {
             step1.style.display = 'none';
             step2.style.display = 'block';
             gsap.fromTo(step2, { opacity: 0, x: 20 }, { opacity: 1, x: 0, duration: 0.3, ease: "power2.out" });
+            
+            // Inicializar mapa interactivo de empresa
+            if (window.initCompanyRegMap) {
+                setTimeout(window.initCompanyRegMap, 300);
+            }
         }});
 
         // Enable business fields
@@ -274,7 +368,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (roleInput.value === 'business') {
         step1.style.display = 'none';
         step2.style.display = 'block';
-        // Enable business fields
         const allInputs = businessFieldsContainer.querySelectorAll('input');
         allInputs.forEach(input => {
             if (input.hasAttribute('data-globally-disabled')) {
@@ -282,8 +375,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 input.removeAttribute('data-globally-disabled');
             }
         });
+        if (window.initCompanyRegMap) {
+            setTimeout(window.initCompanyRegMap, 300);
+        }
     } else {
-        // Disable business fields initially
         const allInputs = businessFieldsContainer.querySelectorAll('input');
         allInputs.forEach(input => {
             if (!input.disabled) {

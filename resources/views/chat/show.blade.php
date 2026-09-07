@@ -1,17 +1,6 @@
 @extends('layouts.dashboard')
 @section('title', 'Chat con ' . ($receiver->company->name ?? $receiver->name) . ' - Spotlight')
 
-@section('sidebar-menu')
-    @if(auth()->user()->role === 'admin')
-        <a href="{{ route('admin.dashboard') }}" class="vs-nav-link"><i class="bi bi-speedometer2 fs-5"></i> Dashboard</a>
-    @elseif(auth()->user()->role === 'business')
-        <a href="{{ route('business.dashboard') }}" class="vs-nav-link"><i class="bi bi-speedometer2 fs-5"></i> Dashboard</a>
-    @else
-        <a href="{{ route('user.dashboard') }}" class="vs-nav-link"><i class="bi bi-shop fs-5"></i> Tienda</a>
-    @endif
-    <a href="{{ route('chat.index') }}" class="vs-nav-link active"><i class="bi bi-chat-dots fs-5"></i> Mensajes</a>
-@endsection
-
 @section('dashboard-content')
 <div class="vs-card d-flex flex-column overflow-hidden border-0 shadow-sm" style="height: calc(100vh - 180px);">
     {{-- Header --}}

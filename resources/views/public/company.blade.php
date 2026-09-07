@@ -129,13 +129,7 @@
                          style="transition: transform 0.2s, box-shadow 0.2s;"
                          onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 16px 40px rgba(0,35,111,0.12)'"
                          onmouseout="this.style.transform='';this.style.boxShadow=''">
-                        @if($product->image)
-                            <img src="{{ asset('storage/'.$product->image) }}" class="card-img-top" style="height:200px;object-fit:cover;" alt="{{ $product->name }}">
-                        @else
-                            <div class="d-flex align-items-center justify-content-center bg-light" style="height:200px;">
-                                <i class="bi bi-box-seam text-muted" style="font-size:3rem;opacity:0.3;"></i>
-                            </div>
-                        @endif
+                        <img src="{{ $product->image_url }}" class="card-img-top" style="height:200px;object-fit:cover;" alt="{{ $product->name }}">
                         <div class="card-body d-flex flex-column p-4 flex-fill">
                             <h6 class="fw-bold text-dark mb-1 text-truncate" title="{{ $product->name }}">{{ $product->name }}</h6>
                             @if($product->description)

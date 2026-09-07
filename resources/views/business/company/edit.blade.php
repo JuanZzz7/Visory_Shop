@@ -2,16 +2,6 @@
 @section('title','Mi Empresa - Spotlight')
 @section('page-title','Personalización de Empresa')
 
-@section('sidebar-menu')
-<a href="{{ route('business.dashboard') }}" class="vs-nav-link"><i class="bi bi-grid fs-5"></i> Inicio</a>
-<a href="{{ route('business.company.edit') }}" class="vs-nav-link active"><i class="bi bi-building fs-5"></i> Mi empresa</a>
-<a href="{{ route('business.products.index') }}" class="vs-nav-link"><i class="bi bi-box fs-5"></i> Mis productos</a>
-<a href="{{ route('business.expenses.index') }}" class="vs-nav-link"><i class="bi bi-cash-stack fs-5"></i> Ventas y egresos</a>
-<a href="{{ route('chat.index') }}" class="vs-nav-link {{ request()->is('chat*') ? 'active' : '' }}">
-    <i class="bi bi-chat-dots fs-5"></i> Mensajes
-</a>
-@endsection
-
 @push('styles')
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
 <style>
@@ -367,11 +357,16 @@ document.addEventListener('DOMContentLoaded', function () {
             reader.onload = function (e) {
                 let preview     = document.getElementById(previewId);
                 let placeholder = document.getElementById(placeholderId);
-                if (!preview) {
-                    placeholder.parentElement.innerHTML =
-                        `<img src="${e.target.result}" id="${previewId}" class="w-100 h-100" style="object-fit:cover;">`;
-                } else {
+                if (preview) {
                     preview.src = e.target.result;
+                    preview.style.display = 'block';
+                } else if (placeholder) {
+                    const img = document.createElement('img');
+                    img.id = previewId;
+                    img.src = e.target.result;
+                    img.className = 'w-100 h-100';
+                    img.style.objectFit = 'cover';
+                    placeholder.replaceWith(img);
                 }
             };
             reader.readAsDataURL(input.files[0]);
@@ -385,9 +380,9 @@ document.addEventListener('DOMContentLoaded', function () {
         const file = this.files[0];
         if (!file) return;
 
-        const maxBytes = 15 * 1024 * 1024; // 15 MB
+        const maxBytes = 2 * 1024 * 1024; // 2 MB
         if (file.size > maxBytes) {
-            alert('El banner supera el limite de 15 MB. Por favor elige una imagen mas pequena.');
+            alert('El banner supera el límite de 2 MB permitido por el servidor. Por favor selecciona una imagen de hasta 2 MB.');
             this.value = '';
             document.getElementById('bannerFileInfo').classList.add('d-none');
             return;

@@ -370,7 +370,7 @@
                 i.classList.add('error');
             });
             btnVerify.disabled = true;
-            btnVerify.textContent = '⏱ Código expirado — Reenvía el correo';
+            btnVerify.textContent = 'Código expirado — Reenvíe el correo';
             return;
         }
         const m = Math.floor(totalSeconds / 60).toString().padStart(2, '0');
